@@ -47,7 +47,7 @@ const News = ({ title, display_name, timestamp, link_image, prop }) => {
   return (
     <div
       onClick={() => navigate(`/detail/${prop}`)}
-      className="w-full sm:w-96 h-96 flex flex-col example-enter cursor-pointer "
+      className="w-full sm:w-96 h-96 flex flex-col example-enter cursor-pointer border-b-2 border-gray-500"
     >
       <div className="w-full">
         <img
@@ -60,7 +60,6 @@ const News = ({ title, display_name, timestamp, link_image, prop }) => {
         <div className="text-xl font-bold">{title}</div>
         <div className="text-md">{timeago.format(timestamp, "th_TH")}</div>
       </div>
-      <hr />
     </div>
   );
 };

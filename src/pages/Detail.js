@@ -4,13 +4,13 @@ import { useParams } from "react-router-dom";
 import Layouts from "../components/Layouts";
 import LayoutsWithSessionCheck from "../components/LayoutsWithSessionCheck";
 import { app } from "../Handle/firebase";
-// import * as timeago from "timeago.js";
-import _ from "lodash";
+// import _ from "lodash";
 export default function Detail() {
   const [Detail, setDetail] = useState(null);
 
   let { id } = useParams();
   const database = getDatabase(app);
+
   useEffect(() => {
     const starCountRef = ref(database, `news/${id}`);
     onValue(starCountRef, (snapshot) => {
@@ -31,9 +31,9 @@ export default function Detail() {
         <Layouts>
           {Detail !== null ? (
             <div className="container py-3 flex flex-col gap-3">
-              <div className="h-[24rem] md:h-[35rem] overflow-y-auto">
+              <div className="h-[24rem] md:h-[35rem] overflow-y-auto ">
                 <img
-                  className="object-cover w-full "
+                  className="object-cover w-full rounded-lg"
                   src={Detail.link_image}
                   alt=""
                 />
@@ -56,25 +56,31 @@ export default function Detail() {
                     {new Date(Detail.timestamp).toLocaleDateString("th-TH")}
                   </div>
                 </div>
-                <div className="flex gap-1 ">
-                  <div>
-                    <i class="fas fa-eye"></i>
-                  </div>
-                  <div>
-                    {new Date(Detail.timestamp).toLocaleDateString("th-TH")}
-                  </div>
-                </div>
               </div>
               <hr></hr>
-              <div className="text-lg">{Detail.discription}</div>
+              <div className="text-lg">
+                <div dangerouslySetInnerHTML={{ __html: Detail.discription }} />
+              </div>
 
               <hr></hr>
 
               <div className="w-full flex flex-col sm:flex-row justify-center items-center sm:justify-between text-center">
                 <div>Copyright {new Date().getFullYear()} Teacher News</div>
                 <div className="flex gap-2 ">
-                <i onClick={()=>open_tap("https://www.facebook.com/profile.php?id=100008786231232")} class="fab text-2xl fa-facebook-square"></i>
-                <i onClick={()=>open_tap("https://www.instagram.com/teerut_1t/")} class="fab text-2xl fa-instagram-square"></i>
+                  <i
+                    onClick={() =>
+                      open_tap(
+                        "https://www.facebook.com/profile.php?id=100008786231232"
+                      )
+                    }
+                    class="fab text-2xl fa-facebook-square"
+                  ></i>
+                  <i
+                    onClick={() =>
+                      open_tap("https://www.instagram.com/teerut_1t/")
+                    }
+                    class="fab text-2xl fa-instagram-square"
+                  ></i>
                 </div>
               </div>
             </div>

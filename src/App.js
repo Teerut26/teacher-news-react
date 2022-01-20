@@ -2,6 +2,9 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "animate.css";
 import "react-toastify/dist/ReactToastify.css";
+import 'react-quill/dist/quill.snow.css';
+import 'react-quill/dist/quill.bubble.css';
+import 'react-quill/dist/quill.core.css';
 
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
