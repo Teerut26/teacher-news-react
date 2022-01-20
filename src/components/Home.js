@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Layouts from "./Layouts";
 
 const Profile = ({ image_url, name, position, facebook_url }) => {
@@ -32,8 +33,7 @@ const Profile = ({ image_url, name, position, facebook_url }) => {
 };
 
 function Home() {
-
-  
+  const navigate = useNavigate();
 
   return (
     <>
@@ -61,6 +61,7 @@ function Home() {
                 saepe, possimus quasi officiis sit amet, cumque accusamus in
                 doloremque maxime deserunt.
               </div>
+              <div onClick={()=>navigate("/news-lists")} className="px-3 py-2 bg-sky-600 text-white cursor-pointer">เข้าสู่หน้าเว็บ</div>
             </div>
           </div>
           <div className="pb-3 animate__animated animate__fadeIn">

@@ -9,9 +9,32 @@ import * as timeago from "timeago.js";
 import _ from "lodash";
 import { useNavigate } from "react-router-dom";
 
+let locale = function (number, index, totalSec) {
+  // number: the time ago / time in number;
+  // index: the index of array below;
+  // totalSec: total seconds between date to be formatted and today's date;
+  return [
+    ["ตอนนี้", "right now"],
+    ["%s วินาทีที่แล้ว", "in %s seconds"],
+    ["1 นาทีที่แล้ว", "in 1 minute"],
+    ["%s นาทีที่แล้ว", "in %s minutes"],
+    ["1 ชั่วโมงที่แล้ว", "in 1 hour"],
+    ["%s ชั่วโมงที่แล้ว", "in %s hours"],
+    ["1 วันที่ผ่านมา", "in 1 day"],
+    ["%s วันที่ผ่านมา", "in %s days"],
+    ["1 อาทิตย์ที่แล้ว", "in 1 week"],
+    ["%s อาทิตย์ที่แล้ว", "in %s weeks"],
+    ["1 เดือนที่แล้ว", "in 1 month"],
+    ["%s เดือนที่แล้ว", "in %s months"],
+    ["1 ปีที่แล้ว", "in 1 year"],
+    ["%s ปีที่แล้ว", "in %s years"],
+  ][index];
+};
+
+timeago.register("th_TH", locale);
+
 const News = ({ title, display_name, timestamp, link_image, prop }) => {
   const navigate = useNavigate();
-
   const [, setTime] = useState(Date.now());
 
   useEffect(() => {
@@ -24,22 +47,20 @@ const News = ({ title, display_name, timestamp, link_image, prop }) => {
   return (
     <div
       onClick={() => navigate(`/detail/${prop}`)}
-      className="w-full sm:w-96 h-96 flex flex-col border-2 example-enter cursor-pointer"
+      className="w-full sm:w-96 h-96 flex flex-col example-enter cursor-pointer "
     >
       <div className="w-full">
         <img
-          className="object-cover h-[16rem] w-full"
+          className="object-cover h-[16rem] w-full rounded-lg "
           src={link_image}
           alt=""
         />
       </div>
-      <div className="flex flex-col h-100 ">
-        <div className="flex justify-between mx-2 mt-2 ">
-          <div>By {display_name}</div>
-          <div>{timeago.format(timestamp, "th_TH")}</div>
-        </div>
-        <div className="flex items-center m-2 h-100">{title}</div>
+      <div className="flex flex-col py-3 ">
+        <div className="text-xl font-bold">{title}</div>
+        <div className="text-md">{timeago.format(timestamp, "th_TH")}</div>
       </div>
+      <hr />
     </div>
   );
 };
@@ -56,13 +77,12 @@ function NewsLists({}) {
       const data = snapshot.val();
       const result = _.map(data, (value, prop) => ({ prop, ...value }));
       setNewsList(result);
-      
     });
   }, []);
 
   useEffect(() => {
     setNewsListSearch(NewsList);
-    SearchFnc()
+    SearchFnc();
   }, [NewsList]);
 
   const SearchFnc = () => {
