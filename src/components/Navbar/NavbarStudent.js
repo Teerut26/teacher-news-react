@@ -1,27 +1,78 @@
 import React, { useState } from "react";
 import { Transition } from "@headlessui/react";
+import { useNavigate } from "react-router-dom";
+import { connect } from "react-redux";
 
-function Nav() {
+function NavbarStudent({ is_dark, dispatch }) {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+
+  const dark = () => {
+    dispatch({
+      type: "set_is_dark",
+      playload: !is_dark,
+    });
+  };
+
+  const signOut = () => {
+    dispatch({
+      type: "sign_out",
+      playload: null,
+    });
+    dispatch({
+      type: "set_user_data",
+      playload: null,
+    });
+  };
+
   return (
-    <div>
-      <nav className="bg-white border-b-2">
-        <div className="max-w-7xl mx-auto px-4 sm:px-[10rem] lg:px-[20rem]">
+    <div className="sticky top-0 z-40 backdrop-blur-md bg-white/50 dark:bg-slate-900/40">
+      <nav className="border-b-2 ">
+        <div className="navbar-warpper">
           <div className="flex items-center justify-between md:justify-center h-16 w-full">
             <div className="flex items-center justify-between w-full ">
-              <div className="flex">Teacher News</div>
-              <div className="hidden md:block">
-              <div className="flex flex-row gap-10 ">
-                <div className="flex">เข้าสูระบบ</div>
-                <div className="flex">สมัครสมาชิก</div>
+              <div onClick={() => navigate("/")} className="flex text-xl">
+                Teacher News
               </div>
+              <div className="hidden md:block">
+                <div className="flex flex-row gap-2">
+                  {is_dark ? (
+                    <div
+                      onClick={() => dark()}
+                      className=" cursor-pointer hover:bg-gray-400/20 px-3 py-2 rounded-md text-sm font-medium flex flex-row items-center gap-2"
+                    >
+                      <i className="fas fa-sun"></i>
+                    </div>
+                  ) : (
+                    <div
+                      onClick={() => dark()}
+                      className=" cursor-pointer hover:bg-gray-400/20 px-3 py-2 rounded-md text-sm font-medium flex flex-row items-center gap-2"
+                    >
+                      <i className="fas fa-moon"></i>
+                    </div>
+                  )}
+                  <div
+                    onClick={() => navigate("/news-lists")}
+                    className=" cursor-pointer hover:bg-gray-400/20 px-3 py-2 rounded-md text-sm font-medium flex flex-row items-center gap-2"
+                  >
+                    <i className="bx bxs-news text-lg"></i>
+                    ข่าว
+                  </div>
+                  <div
+                    onClick={() => signOut()}
+                    className="bg-red-500 cursor-pointer text-white hover:bg-red-500/80 px-3 py-2 rounded-md text-sm font-medium flex flex-row items-center gap-2"
+                  >
+                    <i className="fas fa-sign-out-alt"></i>
+                    Sign Out
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="-mr-2 flex md:hidden">
+            <div className="flex md:hidden">
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 type="button"
-                className="bg-gray-900 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                className=" inline-flex items-center justify-center p-2 rounded-md text-gray-400  focus:outline-none  focus:ring-white"
                 aria-controls="mobile-menu"
                 aria-expanded="false"
               >
@@ -76,24 +127,36 @@ function Nav() {
           {(ref) => (
             <div className="md:hidden" id="mobile-menu">
               <div ref={ref} className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <div className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium flex flex-row items-center gap-1">
-                  <i className="fas fa-shopping-basket text-gray-300"></i>
-                  <div className="text-gray-300">หมวดหมู่สินค้า</div>
+                {is_dark ? (
+                  <div
+                    onClick={() => dark()}
+                    className=" cursor-pointer hover:bg-gray-400/20 px-3 py-2 rounded-md text-sm font-medium flex flex-row items-center gap-2"
+                  >
+                    <i className="fas fa-sun"></i>
+                    <div>Dark</div>
+                  </div>
+                ) : (
+                  <div
+                    onClick={() => dark()}
+                    className=" cursor-pointer hover:bg-gray-400/20 px-3 py-2 rounded-md text-sm font-medium flex flex-row items-center gap-2"
+                  >
+                    <i className="fas fa-moon"></i>
+                    <div>White</div>
+                  </div>
+                )}
+                <div
+                  onClick={() => navigate("/news-lists")}
+                  className=" cursor-pointer hover:bg-gray-400/20 px-3 py-2 rounded-md text-sm font-medium flex flex-row items-center gap-2"
+                >
+                  <i className="bx bxs-news text-lg"></i>
+                  ข่าว
                 </div>
-
-                <div className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium flex flex-row items-center gap-1">
-                  <i className="fas fa-shopping-cart text-gray-300"></i>
-                  <div className="text-gray-300">ซื้อ Robux</div>
-                </div>
-
-                <div className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium flex flex-row items-center gap-1">
-                  <i className="fas fa-sign-in-alt text-gray-300"></i>
-                  <div className="text-gray-300">เข้าสู่ระบบ</div>
-                </div>
-
-                <div className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium flex flex-row items-center gap-1">
-                  <i className="fas fa-user-plus text-gray-300"></i>
-                  <div className="text-gray-300">สมัครสมาชิก</div>
+                <div
+                  onClick={() => signOut()}
+                  className="bg-red-500 cursor-pointer text-white hover:bg-red-500/80 px-3 py-2 rounded-md text-sm font-medium flex flex-row items-center gap-2"
+                >
+                  <i className="fas fa-sign-out-alt"></i>
+                  Sign Out
                 </div>
               </div>
             </div>
@@ -104,4 +167,6 @@ function Nav() {
   );
 }
 
-export default Nav;
+export default connect((state) => {
+  return state;
+})(NavbarStudent);

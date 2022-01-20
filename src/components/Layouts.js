@@ -1,13 +1,30 @@
 import React from "react";
+import { connect } from "react-redux";
+import LayoutTeacher from "./LayoutTeacher";
 import NavbarHome from "./Navbar/NavbarHome";
+import NavbarStudent from "./Navbar/NavbarStudent";
+import NavbarTeacher from "./Navbar/NavbarTeacher";
 
-export default function Layouts({ children }) {
+function Layouts({ children, user_data }) {
   return (
     <>
-      <div className="dark:bg-slate-900 dark:text-gray-50">
+      {user_data === null ? (
         <NavbarHome />
-        <div className="animate__animated animate__fadeIn">{children}</div>
-      </div>
+      ) : user_data.level === "m" ? (
+        <NavbarStudent />
+      ) : user_data.level === "a" ? (
+        <LayoutTeacher>
+          <NavbarTeacher />
+        </LayoutTeacher>
+      ) : (
+        ""
+      )}
+
+      <div className="animate__animated animate__fadeIn h-full">{children}</div>
     </>
   );
 }
+
+export default connect((state) => {
+  return state;
+})(Layouts);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Layouts from "./Layouts";
 
@@ -32,6 +32,9 @@ const Profile = ({ image_url, name, position, facebook_url }) => {
 };
 
 function Home() {
+
+  
+
   return (
     <>
       <Layouts>

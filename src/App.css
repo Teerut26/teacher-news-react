@@ -3,6 +3,10 @@
   font-family: "Kanit", sans-serif;
 }
 
+body > #root > div {
+  height: 100%;
+}
+
 .facebook-btn {
   background: #0058fa;
   background: -webkit-linear-gradient(to right, #0058fa 0%, #00a6f9 100%);
@@ -12,16 +16,13 @@
   -webkit-text-fill-color: transparent;
 }
 
-
-.facebook-bg{
-  background: #415DAE;
+.facebook-bg {
+  background: #415dae;
 }
 
-.google-bg{
-  background: #CB4023;
+.google-bg {
+  background: #cb4023;
 }
-
-
 
 ::-webkit-scrollbar {
   display: block;
@@ -48,6 +49,11 @@
   padding-right: 1rem;
 }
 
+.navbar-warpper-teacher {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 .w-login-register {
   padding-left: 2rem;
   padding-right: 2rem;
@@ -60,6 +66,10 @@
   .navbar-warpper {
     padding-left: 10rem;
     padding-right: 10rem;
+  }
+  .navbar-warpper-teacher {
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
   .home-padding {
     padding-top: 5rem !important;
@@ -75,6 +85,10 @@
     padding-left: 16rem;
     padding-right: 16rem;
   }
+  .navbar-warpper-teacher {
+    padding-left: 10rem;
+    padding-right: 10rem;
+  }
   .w-login-register {
     padding-left: 18rem;
     padding-right: 18rem;
@@ -86,4 +100,36 @@
     padding-left: 20rem;
     padding-right: 20rem;
   }
+  /* .navbar-warpper-teacher {
+    padding-left: 10rem;
+    padding-right: 10rem;
+  } */
+}
+
+@media screen and (min-width: 1270px) {
+  .navbar-warpper-teacher {
+    padding-left: 17rem;
+    padding-right: 17rem;
+  }
+}
+
+
+.example-enter {
+  animation: flasher 1s;
+}
+
+@keyframes flasher {
+  from {
+    transform: translate(-200px, 0px);
+    opacity: 0;
+  }
+  to {
+    transform: translate(0px, 0px);
+    opacity: 1;
+  }
+}
+
+a {
+    color: !important;
+    text-decoration: underline;
 }

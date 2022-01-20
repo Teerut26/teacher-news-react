@@ -16,7 +16,7 @@ function NavbarHome({ is_dark, dispatch }) {
 
   return (
     <div className="sticky top-0 z-40 backdrop-blur-md bg-white/50 dark:bg-slate-900/40">
-      <nav className="border-b-2 dark:border-b-0">
+      <nav className="border-b-2 ">
         <div className="navbar-warpper">
           <div className="flex items-center justify-between md:justify-center h-16 w-full">
             <div className="flex items-center justify-between w-full ">
