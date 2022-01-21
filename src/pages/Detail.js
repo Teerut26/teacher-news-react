@@ -36,26 +36,24 @@ export default function Detail() {
       if (user) {
         get(ref(database, `users/${user.uid}`)).then((snapshot) => {
           if (snapshot.exists()) {
-            if (snapshot.val().level === "a") {
-              push(ref(database, `news-temp`), {
-                ...Detail,
-                timestamp: new Date().toISOString(),
-                exprie: createExpiryUnix(),
-              }).then((snap) => {
-                navigator.clipboard.writeText(
-                  `${process.env.REACT_APP_NEWS_TEMP_PATH}${snap.key}`
-                );
-                toast.success(`coppy to clipboard success.`, {
-                  position: "top-right",
-                  autoClose: 5000,
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                });
+            push(ref(database, `news-temp`), {
+              ...Detail,
+              timestamp: new Date().toISOString(),
+              exprie: createExpiryUnix(),
+            }).then((snap) => {
+              navigator.clipboard.writeText(
+                `${process.env.REACT_APP_NEWS_TEMP_PATH}${snap.key}`
+              );
+              toast.success(`coppy to clipboard success.`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
               });
-            }
+            });
           }
         });
       }
