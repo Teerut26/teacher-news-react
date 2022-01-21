@@ -6,6 +6,8 @@ import { app } from "../Handle/firebase";
 
 export default function NewsTemp() {
   const [Detail, setDetail] = useState(null);
+  const [HasNotNews, setHasNotNews] = useState(false);
+
   const { id } = useParams();
   const database = getDatabase(app);
 
@@ -21,7 +23,11 @@ export default function NewsTemp() {
       if (snapshot.exists()) {
         if (!checkExpired(snapshot.val().exprie)) {
           setDetail(snapshot.val());
+        } else {
+          setHasNotNews(true);
         }
+      } else {
+        setHasNotNews(true);
       }
     });
   }, [id]);
@@ -56,7 +62,6 @@ export default function NewsTemp() {
                   {new Date(Detail.timestamp).toLocaleDateString("th-TH")}
                 </div>
               </div>
-              
             </div>
             <hr></hr>
             <div className="text-lg">
@@ -85,10 +90,12 @@ export default function NewsTemp() {
               </div>
             </div>
           </div>
-        ) : (
+        ) : HasNotNews ? (
           <div className="my-5 flex justify-center text-3xl">
             <div>ไม่พบข่าว</div>
           </div>
+        ) : (
+          ""
         )}
       </Layouts>
     </>
