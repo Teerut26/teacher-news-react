@@ -16,6 +16,7 @@ import NewsLists from "./pages/NewsLists";
 import MyNews from "./pages/MyNews";
 import CreateNews from "./pages/CreateNews"
 import Detail from "./pages/Detail";
+import EditNews from "./pages/EditNews";
 
 function App({ is_dark, user_data }) {
   return (
@@ -29,6 +30,7 @@ function App({ is_dark, user_data }) {
             <Route exact path="/register" element={<Register />} />
             <Route exact path="/news-lists" element={<NewsLists />} />
             <Route exact path="/detail/:id" element={<Detail />} />
+            <Route exact path="/edit/:id" element={<EditNews />} />
             <Route exact path="/my-news" element={<MyNews />} />
             <Route exact path="/create-news" element={<CreateNews />} />
           </Routes>

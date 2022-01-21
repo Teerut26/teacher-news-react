@@ -38,8 +38,16 @@ const News = ({
   return (
     <div className="w-full sm:w-96 h-96 flex flex-col border-2 example-enter cursor-pointer relative">
       <div
+        onClick={() => navigate("/edit/" + prop)}
+        className="absolute flex justify-center rounded-bl-lg text-white end-0 top-0 bg-gray-500 w-[1.5rem] h-[1.5rem]"
+      >
+        <p>
+          <i class="bx bxs-pencil"></i>
+        </p>
+      </div>
+      <div
         onClick={() => delete_post()}
-        className="absolute flex justify-center rounded-bl-lg text-white end-0 top-0 bg-red-500 w-[1.5rem] h-[1.5rem]"
+        className="absolute flex justify-center rounded-br-lg text-white start-0 top-0 bg-red-500 w-[1.5rem] h-[1.5rem]"
       >
         <p>X</p>
       </div>
@@ -81,7 +89,7 @@ function MyNews({ user_data, dispatch }) {
 
   useEffect(() => {
     setNewsListSearch(NewsList);
-    SearchFnc()
+    SearchFnc();
   }, [NewsList]);
 
   const SearchFnc = () => {

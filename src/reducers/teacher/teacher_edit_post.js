@@ -1,27 +1,22 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { get, getDatabase, push, ref } from "firebase/database";
+import { get, getDatabase, ref, update } from "firebase/database";
 import { toast } from "react-toastify";
 import { app } from "../../Handle/firebase";
 
 const database = getDatabase(app);
 const auth = getAuth(app);
 
-const teacher_add_post = (state = null, action) => {
+const teacher_edit_post = (state = null, action) => {
   switch (action.type) {
-    case "teacher_add_post":
+    case "teacher_edit_post":
       onAuthStateChanged(auth, (user) => {
         if (user) {
           get(ref(database, `users/${user.uid}`)).then((snapshot) => {
             if (snapshot.exists()) {
               if (snapshot.val().level === "a") {
-                push(ref(database, `news`), {
-                  ...action.playload,
-                  timestamp: new Date().toISOString(),
-                  display_name: user.displayName,
-                  owner_uid: user.uid,
-                });
+                update(ref(database, `news/${action.playload.id}`), action.playload.data);
 
-                toast.success(`add post success.`, {
+                toast.success(`update post success.`, {
                   position: "top-right",
                   autoClose: 5000,
                   hideProgressBar: false,
@@ -43,4 +38,4 @@ const teacher_add_post = (state = null, action) => {
   }
 };
 
-export { teacher_add_post };
+export { teacher_edit_post };

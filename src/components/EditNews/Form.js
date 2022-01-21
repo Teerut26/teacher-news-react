@@ -1,38 +1,39 @@
-import React, { useEffect, useRef, useState } from "react";
-import { connect } from "react-redux";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import React, { useState } from "react";
+import uuid from "react-uuid";
+import { app } from "../../Handle/firebase";
 import ReactQuill from "react-quill";
 import DropFile from "./DropFile";
-import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { app } from "../../Handle/firebase";
-import uuid from "react-uuid";
+import { connect } from "react-redux";
 import axios from "axios";
 import FormData from "form-data";
 
-function Form({ dispatch, teacher_add_post }) {
-  const title = useRef(null);
-  const [Discription, setDiscription] = useState("");
+function Form({
+  discription,
+  link_image,
+  title,
+  id,
+  dispatch,
+}) {
+  const [Title, setTitle] = useState(title);
+  const [Discription, setDiscription] = useState(discription);
   const [File, setFile] = useState(null);
-  const [LinkImage, setLinkImage] = useState("");
+  const [LinkImage, setLinkImage] = useState(link_image);
   const storage = getStorage(app);
 
-  const submit = (e) => {
+  const Submit = (e) => {
     e.preventDefault();
-    if (title.current.value.length === 0 || title.current.value === null)
-      return;
-    if (LinkImage.length === 0 || LinkImage === null) return;
-
     dispatch({
-      type: "teacher_add_post",
+      type: "teacher_edit_post",
       playload: {
-        title: title.current.value,
-        discription: Discription,
-        link_image: LinkImage,
+        id,
+        data: {
+          title: Title,
+          discription: Discription,
+          link_image: LinkImage,
+        },
       },
     });
-
-    title.current.value = "";
-    setDiscription("");
-    setLinkImage("");
   };
 
   const upload_file = async () => {
@@ -48,24 +49,18 @@ function Form({ dispatch, teacher_add_post }) {
     });
 
     setLinkImage(data.attachments[0].url);
-    // const storageRef = ref(storage, `images/${uuid()}`);
-
-    // uploadBytes(storageRef, File).then((snapshot) => {
-    //   getDownloadURL(ref(storage, snapshot.metadata.fullPath)).then((url) => {
-    //     setLinkImage(url);
-    //   });
-    // });
   };
 
   return (
     <div className="flex container justify-center h-screen">
-      <form onSubmit={submit} className="w-full md:w-[50rem] mt-5">
+      <form onSubmit={Submit} className="w-full md:w-[50rem] mt-5">
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">
             หัวข้อข่าว
           </label>
           <input
-            ref={title}
+            value={Title}
+            onChange={(e) => setTitle(e.target.value)}
             type="text"
             className="bg-gray-200 dark:bg-slate-700 appearance-none border-0 w-full py-2 px-2 rounded-[0.2rem] text-gray-700 dark:text-white leading-tight focus:outline-none"
             id="exampleInputEmail1"
@@ -101,6 +96,7 @@ function Form({ dispatch, teacher_add_post }) {
             </div>
             <button
               onClick={() => upload_file()}
+              type="button"
               className="btn btn-primary rounded-[0.2rem] "
             >
               Upload
@@ -111,13 +107,13 @@ function Form({ dispatch, teacher_add_post }) {
           type="submit"
           className="btn btn-primary rounded-[0.2rem] w-full"
         >
-          Submit
+          Update
         </button>
       </form>
     </div>
   );
 }
 
-export default connect((state) => {
-  return state;
+export default connect((item) => {
+  return item;
 })(Form);

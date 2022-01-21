@@ -6,6 +6,7 @@ import { user_data } from "./user_data";
 import { sign_out } from "./sign_out";
 import { teacher_add_post } from "./teacher/teacher_add_post";
 import { teacher_delete_post } from "./teacher/teacher_delete_post";
+import { teacher_edit_post } from "./teacher/teacher_edit_post";
 
 const reducer = combineReducers({
   is_dark,
@@ -13,11 +14,12 @@ const reducer = combineReducers({
   sign_out,
   teacher_add_post,
   teacher_delete_post,
+  teacher_edit_post,
 });
 
 const store = createStore(
   reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 export { store };
