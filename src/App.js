@@ -17,8 +17,9 @@ import MyNews from "./pages/MyNews";
 import CreateNews from "./pages/CreateNews"
 import Detail from "./pages/Detail";
 import EditNews from "./pages/EditNews";
+import NewsTemp from "./pages/NewsTemp";
 
-function App({ is_dark, user_data }) {
+function App({ is_dark }) {
   return (
     <div className={is_dark ? "dark" : ""}>
       <div className="dark:bg-slate-900 dark:text-gray-50 h-full">
@@ -33,6 +34,7 @@ function App({ is_dark, user_data }) {
             <Route exact path="/edit/:id" element={<EditNews />} />
             <Route exact path="/my-news" element={<MyNews />} />
             <Route exact path="/create-news" element={<CreateNews />} />
+            <Route exact path="/news-temp/:id" element={<NewsTemp />} />
           </Routes>
         </Router>
       </div>
